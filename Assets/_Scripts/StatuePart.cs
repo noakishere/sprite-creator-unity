@@ -72,8 +72,6 @@ public class StatuePart
 
         [SerializeField] private List<StatuePartTypes> incompatibilities;
 
-        [SerializeField] private bool isMultipleParts;
-
         public void AssignParent(StatuePart statuePart)
         {
             this.statuePart = statuePart;

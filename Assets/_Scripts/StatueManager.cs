@@ -89,7 +89,6 @@ public class StatueManager : MonoBehaviour
             {
                 StatuePart dependencyPart = statueData.GetPart(depOption.dependencyType);
                 dependencyPart.shouldRender = true;
-                Debug.Log($"YO {depOption.dependencyType.ToString()}");
 
                 if (depOption.requiresSpecificOption)
                 {
@@ -103,9 +102,6 @@ public class StatueManager : MonoBehaviour
                     {
                         statueDict.Add(depOption.dependencyType, dependencyPart);
                     }
-                    //childrenToBeRendered.Add(dependencyPart);
-                    //dependencyPart.shouldRender = true;
-
                 }
 
                 else

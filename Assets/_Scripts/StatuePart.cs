@@ -108,7 +108,7 @@ public class StatuePart
 
         public bool AreSpecificDependenciesRendered(Dictionary<StatuePartTypes, StatuePart> statueDict)
         {
-            foreach (var depOption in dependencyOptions)
+            foreach (DependencyOptionPair depOption in dependencyOptions)
             {
                 // Try to get the dependent part from the dictionary
                 if (statueDict.TryGetValue(depOption.dependencyType, out StatuePart dependentPart))
@@ -121,6 +121,10 @@ public class StatuePart
                         {
                             return false; // Specific required option is not matched
                         }
+                    }
+                    else if (!statueDict[depOption.dependencyType].shouldRender)
+                    {
+                        return false;
                     }
                     // If no specific option is required, the existence of the part is enough
                     // No action needed in this case
@@ -289,6 +293,7 @@ public class StatuePart
         optionsIndex = num;
         currentOption = options[optionsIndex];
         chosenSprite = options[optionsIndex].Images[0];
+        Debug.Log($"ITS ME {chosenSprite.name}");
     }
 
     [Serializable]

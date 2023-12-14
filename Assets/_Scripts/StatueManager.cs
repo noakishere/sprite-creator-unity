@@ -124,34 +124,6 @@ public class StatueManager : MonoBehaviour
             }
         }
 
-       
-
-        //foreach (StatuePartTypes statuePartType in statueDict.Keys.ToList())
-        //{
-
-        //    bool containsSpecificType = statueDict.Any(part => part.Value.sta == statuePartType);
-
-        //    if (containsSpecificType)
-        //    {
-        //        StatuePart newPart = statueDict[statuePartType];
-
-        //        incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(childrenToBeRendered);
-
-        //        if (incompatibilities.Count > 0)
-        //        {
-        //            foreach (StatuePartTypes part in incompatibilities)
-        //            {
-        //                //statueDict.Remove(part);
-        //                //Debug.Log("HLLO");
-        //                if (part != currentChosenPart)
-        //                {
-        //                    childrenToBeRendered.Remove(statueData.GetPart(part));
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
         UpdatePortrait();
     }
 
@@ -186,6 +158,16 @@ public class StatueManager : MonoBehaviour
 
         currentChosenPart = test[currentChosenPartIndex].Key;
         textMeshProUGUI.text = currentChosenPart.ToString();
+    }
+
+    public void DisablePart()
+    {
+        var newPart = statueDict[currentChosenPart];
+        //newPart.ProcessNextOption();
+
+        newPart.shouldRender = false;
+
+        UpdatePortrait();
     }
 
     public void UpdatePortrait()

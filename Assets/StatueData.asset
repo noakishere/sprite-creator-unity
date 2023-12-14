@@ -58,11 +58,11 @@ MonoBehaviour:
       incompatibilities: 
   - name: Body
     statuePartType: 2
-    chosenSprite: {fileID: 21300000, guid: 75605ee73da830345abdad115a5add09, type: 3}
+    chosenSprite: {fileID: 21300000, guid: 811d28022152be84ea98c433406985db, type: 3}
     currentOption:
       optionChosenIndex: 0
       img:
-      - {fileID: 21300000, guid: 75605ee73da830345abdad115a5add09, type: 3}
+      - {fileID: 21300000, guid: 811d28022152be84ea98c433406985db, type: 3}
       dependencies: 0400000006000000
       dependencyOptions:
       - requiresSpecificOption: 0
@@ -72,9 +72,9 @@ MonoBehaviour:
         dependencyType: 6
         requiredOptionIndex: 0
       incompatibilities: 10000000
-    optionsIndex: 1
+    optionsIndex: 2
     zIndex: 23
-    shouldRender: 1
+    shouldRender: 0
     isInFirstGeneration: 1
     isInMenu: 1
     options:
@@ -131,20 +131,20 @@ MonoBehaviour:
     options: []
   - name: LeftArmBack
     statuePartType: 4
-    chosenSprite: {fileID: 21300000, guid: 68d7699f21632ef4582a6a486de10568, type: 3}
+    chosenSprite: {fileID: 21300000, guid: d0bd0d635b1132042b768b09dde0da76, type: 3}
     currentOption:
       optionChosenIndex: 1
       img:
-      - {fileID: 21300000, guid: 68d7699f21632ef4582a6a486de10568, type: 3}
+      - {fileID: 21300000, guid: d0bd0d635b1132042b768b09dde0da76, type: 3}
       dependencies: 02000000
       dependencyOptions:
       - requiresSpecificOption: 0
         dependencyType: 2
         requiredOptionIndex: 0
       incompatibilities: 10000000
-    optionsIndex: 2
+    optionsIndex: 1
     zIndex: 11
-    shouldRender: 1
+    shouldRender: 0
     isInFirstGeneration: 1
     isInMenu: 1
     options:
@@ -192,20 +192,20 @@ MonoBehaviour:
     options: []
   - name: RightArmBack
     statuePartType: 6
-    chosenSprite: {fileID: 21300000, guid: 390bcd79559820041bd605cc4f75b0f6, type: 3}
+    chosenSprite: {fileID: 21300000, guid: 94085e261faf19644b45f5c3b0c2f967, type: 3}
     currentOption:
       optionChosenIndex: 1
       img:
-      - {fileID: 21300000, guid: 390bcd79559820041bd605cc4f75b0f6, type: 3}
+      - {fileID: 21300000, guid: 94085e261faf19644b45f5c3b0c2f967, type: 3}
       dependencies: 02000000
       dependencyOptions:
       - requiresSpecificOption: 0
         dependencyType: 2
         requiredOptionIndex: 0
       incompatibilities: 10000000
-    optionsIndex: 2
+    optionsIndex: 0
     zIndex: 14
-    shouldRender: 1
+    shouldRender: 0
     isInFirstGeneration: 1
     isInMenu: 1
     options:
@@ -253,11 +253,11 @@ MonoBehaviour:
     options: []
   - name: Face
     statuePartType: 8
-    chosenSprite: {fileID: 21300000, guid: d17e9bc3fd559fd46bd3961680e79eac, type: 3}
+    chosenSprite: {fileID: 21300000, guid: e2681130081d99a41a652e1ac56699b5, type: 3}
     currentOption:
       optionChosenIndex: 0
       img:
-      - {fileID: 21300000, guid: d17e9bc3fd559fd46bd3961680e79eac, type: 3}
+      - {fileID: 21300000, guid: e2681130081d99a41a652e1ac56699b5, type: 3}
       dependencies: 090000000a0000000b00000016000000
       dependencyOptions:
       - requiresSpecificOption: 0
@@ -273,7 +273,7 @@ MonoBehaviour:
         dependencyType: 22
         requiredOptionIndex: 0
       incompatibilities: 11000000
-    optionsIndex: 0
+    optionsIndex: 2
     zIndex: 30
     shouldRender: 1
     isInFirstGeneration: 1
@@ -409,18 +409,18 @@ MonoBehaviour:
       incompatibilities: 
   - name: Nose
     statuePartType: 11
-    chosenSprite: {fileID: 21300000, guid: 25f9e7c885c56594ea1fa40741a78f7d, type: 3}
+    chosenSprite: {fileID: 21300000, guid: b1ef085dfb0ddcb46967faa2e3b13502, type: 3}
     currentOption:
       optionChosenIndex: 1
       img:
-      - {fileID: 21300000, guid: 25f9e7c885c56594ea1fa40741a78f7d, type: 3}
+      - {fileID: 21300000, guid: b1ef085dfb0ddcb46967faa2e3b13502, type: 3}
       dependencies: 08000000
       dependencyOptions:
       - requiresSpecificOption: 0
         dependencyType: 8
         requiredOptionIndex: 0
       incompatibilities: 
-    optionsIndex: 1
+    optionsIndex: 0
     zIndex: 40
     shouldRender: 1
     isInFirstGeneration: 1
@@ -455,18 +455,18 @@ MonoBehaviour:
       incompatibilities: 
   - name: HairFront
     statuePartType: 12
-    chosenSprite: {fileID: 21300000, guid: d16cf14b70f026348b345462b5742fa6, type: 3}
+    chosenSprite: {fileID: 21300000, guid: 8d043782882c943408bce927307089f3, type: 3}
     currentOption:
       optionChosenIndex: 0
       img:
-      - {fileID: 21300000, guid: d16cf14b70f026348b345462b5742fa6, type: 3}
-      dependencies: 0e000000
+      - {fileID: 21300000, guid: 8d043782882c943408bce927307089f3, type: 3}
+      dependencies: 08000000
       dependencyOptions:
-      - requiresSpecificOption: 1
-        dependencyType: 14
+      - requiresSpecificOption: 0
+        dependencyType: 8
         requiredOptionIndex: 0
-      incompatibilities: 
-    optionsIndex: 0
+      incompatibilities: 0e000000
+    optionsIndex: 2
     zIndex: 41
     shouldRender: 1
     isInFirstGeneration: 1
@@ -535,7 +535,7 @@ MonoBehaviour:
       incompatibilities: 
     optionsIndex: 0
     zIndex: 9
-    shouldRender: 1
+    shouldRender: 0
     isInFirstGeneration: 0
     isInMenu: 1
     options:
@@ -553,16 +553,17 @@ MonoBehaviour:
       incompatibilities: 
   - name: Bangs
     statuePartType: 15
-    chosenSprite: {fileID: 0}
+    chosenSprite: {fileID: 21300000, guid: b26692cb324df3b42ae86c004a68b2f0, type: 3}
     currentOption:
       optionChosenIndex: 0
-      img: []
+      img:
+      - {fileID: 21300000, guid: b26692cb324df3b42ae86c004a68b2f0, type: 3}
       dependencies: 
       dependencyOptions: []
       incompatibilities: 
-    optionsIndex: 0
+    optionsIndex: 1
     zIndex: 43
-    shouldRender: 0
+    shouldRender: 1
     isInFirstGeneration: 0
     isInMenu: 1
     options:
@@ -586,17 +587,17 @@ MonoBehaviour:
       incompatibilities: 
   - name: SpecialBody
     statuePartType: 16
-    chosenSprite: {fileID: 21300000, guid: 75b580e552439464cb9809b6693d2831, type: 3}
+    chosenSprite: {fileID: 21300000, guid: 1b2f4368c5d5c1a4ebc5763b2ed47be7, type: 3}
     currentOption:
       optionChosenIndex: 30
       img:
-      - {fileID: 21300000, guid: 75b580e552439464cb9809b6693d2831, type: 3}
+      - {fileID: 21300000, guid: 1b2f4368c5d5c1a4ebc5763b2ed47be7, type: 3}
       dependencies: 
       dependencyOptions: []
       incompatibilities: 020000000400000006000000
-    optionsIndex: 0
+    optionsIndex: 2
     zIndex: 23
-    shouldRender: 0
+    shouldRender: 1
     isInFirstGeneration: 0
     isInMenu: 1
     options:
@@ -620,15 +621,15 @@ MonoBehaviour:
       incompatibilities: 020000000400000006000000
   - name: SpecialFace
     statuePartType: 17
-    chosenSprite: {fileID: 21300000, guid: 0abffea1953469c44af32ffefb5c2285, type: 3}
+    chosenSprite: {fileID: 21300000, guid: 6693971f3f6e1384da792c9d9e866db1, type: 3}
     currentOption:
       optionChosenIndex: 30
       img:
-      - {fileID: 21300000, guid: 0abffea1953469c44af32ffefb5c2285, type: 3}
+      - {fileID: 21300000, guid: 6693971f3f6e1384da792c9d9e866db1, type: 3}
       dependencies: 
       dependencyOptions: []
       incompatibilities: 08000000090000000a0000000b00000016000000170000000c0000000e000000
-    optionsIndex: 0
+    optionsIndex: 1
     zIndex: 30
     shouldRender: 0
     isInFirstGeneration: 0

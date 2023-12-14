@@ -13,6 +13,8 @@ public class StatueManager : MonoBehaviour
     // dictionary to hold the parts
     private Dictionary<StatuePartTypes, StatuePart> statueDict;
 
+    //[SerializeField]
+
     private List<Sprite> spritesToBeCreated;
 
     [SerializeField] private Image godUIImage;
@@ -36,6 +38,13 @@ public class StatueManager : MonoBehaviour
         spritesToBeCreated = new List<Sprite>();
         statueDict = new();
 
+        //foreach(StatuePart statuePart in statueData.statueParts)
+        //{
+        //    statueDict.Add(statuePart.StatuePartType, statuePart);
+        //}
+
+        UpdateDictionary();
+
         GenerateMonolith();
     }
 
@@ -56,6 +65,7 @@ public class StatueManager : MonoBehaviour
     public void UpdateNewPart(int addition = 1)
     {
         //statueDict[currentChosenPart].Options[0].GetNextSprite(addition);
+        Debug.Log(currentChosenPart.ToString());
         statueDict[currentChosenPart].ProcessNextOption(addition);
 
         UpdatePortrait();
@@ -107,48 +117,85 @@ public class StatueManager : MonoBehaviour
         {
             StatuePart newPart = statueDict[statuePartType];
 
-
-
             childrenToBeRendered.Add(newPart);
 
-            requiredDependencies = newPart.currentOption.AreDependenciesRendered(statueDict);
+            //requiredDependencies = newPart.currentOption.AreDependenciesRendered(statueDict);
 
-            if (requiredDependencies.Count > 0)
-            {
-                foreach (StatuePartTypes part in requiredDependencies)
-                {
-                    //Debug.Log(part);
-                    statueDict.Add(part, statueData.GetPart(part));
-                    childrenToBeRendered.Add(statueData.GetPart(part));
-                }
-            }
-
-            //incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(statueDict);
-
-            //if (incompatibilities.Count > 0)
+            //if (requiredDependencies.Count > 0)
             //{
-            //    foreach (StatuePartTypes part in incompatibilities)
+            //    foreach (StatuePartTypes part in requiredDependencies)
             //    {
-            //        //statueDict.Remove(part);
-            //        Debug.Log("HLLO");
-            //        childrenToBeRendered.Remove(statueData.GetPart(part));
+            //        //Debug.Log(part);
+            //        statueDict.Add(part, statueData.GetPart(part));
+            //        childrenToBeRendered.Add(statueData.GetPart(part));
             //    }
             //}
+
+
+            if (!newPart.currentOption.AreSpecificDependenciesRendered(statueDict))
+            {
+                foreach (var depOption in newPart.currentOption.dependencyOptions)
+                {
+                    StatuePart dependencyPart = statueData.GetPart(depOption.dependencyType);
+
+                    if(depOption.requiresSpecificOption)
+                    {
+                        dependencyPart.AssignSpecificOption(depOption.requiredOptionIndex);
+
+                        if(statueDict.ContainsKey(depOption.dependencyType))
+                        {
+                            statueDict[depOption.dependencyType] = dependencyPart;
+                        }
+                        else
+                        {
+                            statueDict.Add(depOption.dependencyType, dependencyPart);
+                        }
+                        childrenToBeRendered.Add(dependencyPart);
+
+                    }
+
+                    else
+                    {
+                        //dependencyPart.AssignSpecificOption(depOption.requiredOptionIndex);
+                        dependencyPart.GetRandomPart();
+
+                        if (statueDict.ContainsKey(depOption.dependencyType))
+                        {
+                            statueDict[depOption.dependencyType] = dependencyPart;
+                        }
+                        else
+                        {
+                            statueDict.Add(depOption.dependencyType, dependencyPart);
+                        }
+
+                        childrenToBeRendered.Add(dependencyPart);
+                    }
+                }
+            }
         }
 
         foreach (StatuePartTypes statuePartType in statueDict.Keys.ToList())
         {
-            StatuePart newPart = statueDict[statuePartType];
+            
+                bool containsSpecificType = childrenToBeRendered.Any(part => part.StatuePartType == statuePartType);
 
-            incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(statueDict);
-
-            if (incompatibilities.Count > 0)
-            {
-                foreach (StatuePartTypes part in incompatibilities)
+                if (containsSpecificType)
                 {
-                    //statueDict.Remove(part);
-                    //Debug.Log("HLLO");
-                    childrenToBeRendered.Remove(statueData.GetPart(part));
+                    StatuePart newPart = statueDict[statuePartType];
+
+                    incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(childrenToBeRendered);
+
+                    if (incompatibilities.Count > 0)
+                    {
+                        foreach (StatuePartTypes part in incompatibilities)
+                        {
+                        //statueDict.Remove(part);
+                        //Debug.Log("HLLO");
+                        if (part != currentChosenPart)
+                        {
+                            childrenToBeRendered.Remove(statueData.GetPart(part));
+                        }
+                    }
                 }
             }
         }
@@ -199,37 +246,115 @@ public class StatueManager : MonoBehaviour
 
         foreach(StatuePart statuePart in initialRenderParts)
         {
-            //Debug.Log(statuePart.StatuePartType);
+            statuePart.shouldRender = true; // crucial in first generation
+
             StatuePart newPart = statuePart;
 
             childrenToBeRendered.Add(statuePart);
 
-            statueDict.Add(statuePart.StatuePartType, statueData.GetPart(statuePart.StatuePartType));
+            //statueDict.Add(statuePart.StatuePartType, statueData.GetPart(statuePart.StatuePartType));
 
-            requiredDependencies = newPart.currentOption.AreDependenciesRendered(statueDict);
-
-            if (requiredDependencies.Count > 0)
+            if (statueDict.ContainsKey(statuePart.StatuePartType))
             {
-                foreach (StatuePartTypes part in requiredDependencies)
+                statueDict[statuePart.StatuePartType] = statueData.GetPart(statuePart.StatuePartType);
+            }
+            else
+            {
+                statueDict.Add(statuePart.StatuePartType, statueData.GetPart(statuePart.StatuePartType));
+            }
+
+            //requiredDependencies = newPart.currentOption.AreDependenciesRendered(statueDict);
+
+            //if (requiredDependencies.Count > 0)
+            //{
+            //    foreach (StatuePartTypes part in requiredDependencies)
+            //    {
+            //        //Debug.Log(part);
+            //        //statueDict.Add(part, statueData.GetPart(part));
+
+            //        if (statueDict.ContainsKey(part))
+            //        {
+            //            statueDict[part] = statueData.GetPart(part);
+            //        }
+            //        else
+            //        {
+            //            statueDict.Add(part, statueData.GetPart(part));
+            //        }
+
+            //        childrenToBeRendered.Add(statueData.GetPart(part));
+            //    }
+            //}
+
+            if (!newPart.currentOption.AreSpecificDependenciesRendered(childrenToBeRendered))
+            {
+                foreach (var depOption in newPart.currentOption.dependencyOptions)
                 {
-                    //Debug.Log(part);
-                    statueDict.Add(part, statueData.GetPart(part));
-                    childrenToBeRendered.Add(statueData.GetPart(part));
+                    StatuePart dependencyPart = statueData.GetPart(depOption.dependencyType);
+
+                    if (depOption.requiresSpecificOption)
+                    {
+                        dependencyPart.AssignSpecificOption(depOption.requiredOptionIndex);
+
+                        if (statueDict.ContainsKey(depOption.dependencyType))
+                        {
+                            statueDict[depOption.dependencyType] = dependencyPart;
+                        }
+                        else
+                        {
+                            statueDict.Add(depOption.dependencyType, dependencyPart);
+                        }
+                        childrenToBeRendered.Add(dependencyPart);
+                    }
+
+                    else
+                    {
+                        //dependencyPart.AssignSpecificOption(depOption.requiredOptionIndex);
+                        dependencyPart.GetRandomPart();
+
+                        if (statueDict.ContainsKey(depOption.dependencyType))
+                        {
+                            statueDict[depOption.dependencyType] = dependencyPart;
+                        }
+                        else
+                        {
+                            statueDict.Add(depOption.dependencyType, dependencyPart);
+                        }
+
+                        childrenToBeRendered.Add(dependencyPart);
+                    }
                 }
             }
 
-            incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(statueDict);
+            incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(childrenToBeRendered);
 
             if (incompatibilities.Count > 0)
             {
                 foreach (StatuePartTypes part in incompatibilities)
                 {
                     //statueDict.Remove(part);
-                    Debug.Log("HLLO");
+                    //Debug.Log("HLLO");
                     childrenToBeRendered.Remove(statueData.GetPart(part));
                 }
             }
         }
+
+        //foreach (StatuePartTypes statuePartType in statueDict.Keys.ToList())
+        //{
+        //    Debug.Log($"Im called here bub, {statuePartType}");
+        //    StatuePart newPart = statueDict[statuePartType];
+
+        //    incompatibilities = newPart.currentOption.AreIncompatibilitiesRendered(statueDict);
+
+        //    if (incompatibilities.Count > 0)
+        //    {
+        //        foreach (StatuePartTypes part in incompatibilities)
+        //        {
+        //            //statueDict.Remove(part);
+        //            //Debug.Log("HLLO");
+        //            childrenToBeRendered.Remove(statueData.GetPart(part));
+        //        }
+        //    }
+        //}
 
         // sort the parts by index
         childrenToBeRendered.Sort((part1, part2) => part1.ZIndex.CompareTo(part2.ZIndex));
@@ -263,6 +388,14 @@ public class StatueManager : MonoBehaviour
     private void UpdateDictionary()
     {
         statueDict.Clear();
+        foreach (StatuePart statuePart in statueData.statueParts)
+        {
+            if (statuePart.IsInMenu)
+            {
+                statueDict.Add(statuePart.StatuePartType, statuePart);
+                //Debug.Log(statuePart.name);
+            }
+        }
     }
 
     private Texture2D CreateCombinedTexture()

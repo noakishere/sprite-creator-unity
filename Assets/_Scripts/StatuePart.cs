@@ -12,15 +12,23 @@ public class StatuePart
     [SerializeField] private StatuePartTypes statuePartType;
     public StatuePartTypes StatuePartType { get { return statuePartType; } }
 
+    public Sprite chosenSprite = null;
+    public StatuePartChild currentOption;
+    public int optionsIndex;
 
     // the order in which the part will be rendered
     [SerializeField] private int zIndex;
     public int ZIndex { get { return zIndex; } }
 
+    public bool shouldRender = false;
+
 
     // this is used for a first time generation
     [SerializeField] private bool isInFirstGeneration;
     public bool IsInFirstGeneration { get { return isInFirstGeneration; } }
+
+    [SerializeField] private bool isInMenu;
+    public bool IsInMenu { get { return isInMenu; } }
 
 
     // Constructor - used by DB upon creation
@@ -35,8 +43,6 @@ public class StatuePart
 
     [SerializeField] private List<StatuePartChild> options;
     public List<StatuePartChild> Options { get { return options; } }
-    public StatuePartChild currentOption;
-    public int optionsIndex;
 
     // keep the reference for the children parts
     public void AssignParentPartToChild()
@@ -48,7 +54,6 @@ public class StatuePart
     }
 
 
-    public Sprite chosenSprite = null;
 
 
     [Serializable]
@@ -62,7 +67,8 @@ public class StatuePart
         [SerializeField] private List<Sprite> img;
         
         [SerializeField] private List<StatuePartTypes> dependencies;
-        //[SerializeField] private List<StatuePartDependencies> dependencyOption;
+        [SerializeField]
+        public List<DependencyOptionPair> dependencyOptions;
 
         [SerializeField] private List<StatuePartTypes> incompatibilities;
 
@@ -100,6 +106,66 @@ public class StatuePart
             return dependenciesToBeRendered;
         }
 
+        public bool AreSpecificDependenciesRendered(Dictionary<StatuePartTypes, StatuePart> statueDict)
+        {
+            foreach (var depOption in dependencyOptions)
+            {
+                // Try to get the dependent part from the dictionary
+                if (statueDict.TryGetValue(depOption.dependencyType, out StatuePart dependentPart))
+                {
+                    // Check if a specific option is required
+                    if (depOption.requiresSpecificOption)
+                    {
+                        // If a specific option is required, check if the option matches
+                        if (dependentPart.optionsIndex != depOption.requiredOptionIndex)
+                        {
+                            return false; // Specific required option is not matched
+                        }
+                    }
+                    // If no specific option is required, the existence of the part is enough
+                    // No action needed in this case
+                }
+                else
+                {
+                    return false; // Dependency part itself is missing
+                }
+            }
+
+            return true; // All dependencies are satisfied
+        }
+
+        public bool AreSpecificDependenciesRendered(List<StatuePart> statueDict)
+        {
+            foreach (var depOption in dependencyOptions)
+            {
+                foreach(StatuePart sp in statueDict)
+                {
+                    if (sp.StatuePartType == depOption.dependencyType)
+                    {
+                        // Check if a specific option is required
+                        if (depOption.requiresSpecificOption)
+                        {
+                            // If a specific option is required, check if the option matches
+                            if (sp.optionsIndex != depOption.requiredOptionIndex)
+                            {
+                                return false; // Specific required option is not matched
+                            }
+                        }
+                        // If no specific option is required, the existence of the part is enough
+                        // No action needed in this case
+                    }
+                    else
+                    {
+                        return false; // Dependency part itself is missing
+                    }
+                }
+                // Try to get the dependent part from the dictionary
+                
+            }
+
+            return true; // All dependencies are satisfied
+        }
+
         public List<StatuePartTypes> AreIncompatibilitiesRendered(Dictionary<StatuePartTypes, StatuePart> statueDict)
         {
             List<StatuePartTypes> incompatibilitiesToBeRendered = new();
@@ -113,6 +179,23 @@ public class StatuePart
                 }
             }
 
+            return incompatibilitiesToBeRendered;
+        }
+
+        public List<StatuePartTypes> AreIncompatibilitiesRendered(List<StatuePart> statueDict)
+        {
+            List<StatuePartTypes> incompatibilitiesToBeRendered = new();
+
+            foreach (StatuePartTypes incompatibility in incompatibilities)
+            {
+                foreach(StatuePart sp in statueDict)
+                {
+                    if(sp.StatuePartType == incompatibility)
+                    {
+                        incompatibilitiesToBeRendered.Add(incompatibility);
+                    }
+                }   
+            }
             return incompatibilitiesToBeRendered;
         }
 
@@ -199,6 +282,21 @@ public class StatuePart
         {
             optionsIndex = num;
         }
+    }
+
+    public void AssignSpecificOption(int num)
+    {
+        optionsIndex = num;
+        currentOption = options[optionsIndex];
+        chosenSprite = options[optionsIndex].Images[0];
+    }
+
+    [Serializable]
+    public class DependencyOptionPair
+    {
+        public bool requiresSpecificOption;
+        public StatuePartTypes dependencyType;
+        public int requiredOptionIndex;
     }
 }
 

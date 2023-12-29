@@ -66,7 +66,7 @@ public class StatuePart
 
         [SerializeField] private List<Sprite> img;
         
-        [SerializeField] private List<StatuePartTypes> dependencies;
+        //[SerializeField] private List<StatuePartTypes> dependencies;
         [SerializeField]
         public List<DependencyOptionPair> dependencyOptions;
 
@@ -84,25 +84,25 @@ public class StatuePart
             return incompatibilities.Contains(statuePart);
         }
 
-        public List<StatuePartTypes> GetDependencies()
-        {
-            return dependencies;
-        }
+        //public List<StatuePartTypes> GetDependencies()
+        //{
+        //    return dependencies;
+        //}
 
-        public List<StatuePartTypes> AreDependenciesRendered(Dictionary<StatuePartTypes, StatuePart> statueDict)
-        {
-            List<StatuePartTypes> dependenciesToBeRendered = new();
+        //public List<StatuePartTypes> AreDependenciesRendered(Dictionary<StatuePartTypes, StatuePart> statueDict)
+        //{
+        //    List<StatuePartTypes> dependenciesToBeRendered = new();
 
-            foreach(StatuePartTypes dependency in dependencies)
-            {
-                if (!statueDict.ContainsKey(dependency))
-                {
-                    dependenciesToBeRendered.Add(dependency);
-                }
-            }
+        //    foreach(StatuePartTypes dependency in dependencies)
+        //    {
+        //        if (!statueDict.ContainsKey(dependency))
+        //        {
+        //            dependenciesToBeRendered.Add(dependency);
+        //        }
+        //    }
 
-            return dependenciesToBeRendered;
-        }
+        //    return dependenciesToBeRendered;
+        //}
 
         public bool AreSpecificDependenciesRendered(Dictionary<StatuePartTypes, StatuePart> statueDict)
         {

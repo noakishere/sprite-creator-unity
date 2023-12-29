@@ -60,6 +60,20 @@ public class StatueManager : MonoBehaviour
         {
             UpdateNewPart();
         }
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            RemovePart();
+        }
+    }
+
+    public void RemovePart()
+    {
+        var newPart = statueDict[currentChosenPart];
+
+        newPart.shouldRender = false;
+
+        UpdatePortrait();
     }
 
     public void UpdateNewPart(int addition = 1)
@@ -188,6 +202,7 @@ public class StatueManager : MonoBehaviour
             {
                 childrenToBeRendered.Add(newPart);
             }
+
 
             //childrenToBeRendered.Add(newPart);
 

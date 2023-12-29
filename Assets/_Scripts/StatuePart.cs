@@ -119,6 +119,10 @@ public class StatuePart
                         {
                             return false; // Specific required option is not matched
                         }
+                        if(!dependentPart.shouldRender)
+                        {
+                            dependentPart.shouldRender = true;
+                        }
                     }
                     else if (!statueDict[depOption.dependencyType].shouldRender)
                     {

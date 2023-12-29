@@ -30,5 +30,8 @@ public enum StatuePartTypes
     Headwear,
     Headband,
     Mask,
-    Accessories
+    Accessories,
+    SpecialEars,
+    MiscSpecialFront,
+    MiscSpecialBack
 }

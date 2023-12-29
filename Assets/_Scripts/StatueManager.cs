@@ -43,6 +43,13 @@ public class StatueManager : MonoBehaviour
         //    statueDict.Add(statuePart.StatuePartType, statuePart);
         //}
 
+        List<StatuePart> initialRenderParts = statueData.statueParts.FindAll(x => !x.IsInFirstGeneration);
+
+        foreach(StatuePart sp in initialRenderParts)
+        {
+            sp.shouldRender = false;
+        }
+
         UpdateDictionary();
 
         GenerateMonolith();
